@@ -13,13 +13,13 @@ Main.eval("""
 using HomotopyContinuation
 using DynamicPolynomials
 
-@polyvar x y
+@polyvar x 
 
-F = System([x^2 + 2y - 1,
-            y^2 - 2x + 3])
+p = System([x^10 + 2x - 1])
 
-result = solve(F)
+result = solve(p)
 """)
+
 
 solutions = Main.eval("[pr.solution for pr in result]")
 
