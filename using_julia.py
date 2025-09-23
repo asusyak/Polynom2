@@ -3,7 +3,6 @@ julia_bin = "/System/Volumes/Data/Users/andriy/Downloads/julia/usr/bin"
 os.environ["JULIA_BINDIR"] = julia_bin
 os.environ["PATH"] = julia_bin + os.pathsep + os.environ.get("PATH", "")
 
-import julia
 from julia import Main
 
 import subprocess
@@ -15,11 +14,11 @@ using DynamicPolynomials
 
 @polyvar x 
 
-p = System([x^10 + 2x - 1])
+p = (1 + 2im)*x^3 + (3 - im)*x^2 + 2im*x + 1
+F = System([p])
 
-result = solve(p)
+result = solve(F)
 """)
-
 
 solutions = Main.eval("[pr.solution for pr in result]")
 
