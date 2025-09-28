@@ -1,23 +1,45 @@
 import bertini as pb
 import numpy as np
 
-x = pb.Variable('x')
-y = pb.Variable('y')
+#x = pb.Variable('x')
+#y = pb.Variable('y')
+
+current_prec = pb.default_precision()
+print(f"Current precision: {current_prec} bits")
+
+tr1 = pb.tracking.DoublePrecisionTracker
+tr2 = pb.tracking.MultiplePrecisionTracker
+tr3 = pb.tracking.AMPTracker
+print(f"Current precision1: {current_prec1} bits")
+
+
+# Work with multiprecision types
+# Create multiprecision complex numbers
+z = pb.multiprec.Complex(1.23456789)
+print(z)
+
+# Use multiprecision vectors
+vec = pb.multiprec.Vector()
+print(vec)
+
+# Use adaptive tracker for high precision
+#tr = pb.tracking.AMPTracker("homotopy")
+#tr.set_tolerance(1e-50)  # Very tight tolerance
 
 z = pb.Variable('z')
 
-vg = pb.VariableGroup([x,y])
+#vg = pb.VariableGroup([x,y])
 vg1 = pb.VariableGroup([z])
 
-sys = pb.System()
+#sys = pb.System()
 sys1 = pb.System()
 
-sys.add_function(x-y)
+#sys.add_function(x-y)
 # sys.add_function(x**2 - 5*x + 6)
-sys.add_function(x**2 + y**2 - 1)
+#sys.add_function(x**2 + y**2 - 1)
 sys1.add_function(z**2 - 5*z + 6)
 
-sys.add_variable_group(vg)
+#sys.add_variable_group(vg)
 sys1.add_variable_group(vg1)
 
 C = pb.multiprec.Complex
@@ -29,27 +51,27 @@ print(dir(pb))
 'random', 'system', 'tracking', 'version']
 '''
 
-variable_values = np.array([C(0), C(0)])
-variable_values1 = np.array([C(0)])
+#variable_values = np.array([C(0), C(0)])
+variable_values1 = np.array([C(4)])
 # variable_values = np.array([C(0)])
 
-result = sys.eval(variable_values)
+#result = sys.eval(variable_values)
 result1 = sys1.eval(variable_values1)
 print('-------------- result --------------')
-print('1:', result)
+#print('1:', result)
 print('2:', result1)
 
-sys.homogenize()
-sys.auto_patch()
+#sys.homogenize()
+#sys.auto_patch()
 
 sys1.homogenize()
 sys1.auto_patch()
 
 # print(dir(bertini._pybertini.nag_algorithms))
-solver = pb.nag_algorithm.ZeroDimCauchyAdaptivePrecisionTotalDegree(sys)
+#solver = pb.nag_algorithm.ZeroDimCauchyAdaptivePrecisionTotalDegree(sys)
 solver1 = pb.nag_algorithm.ZeroDimPowerSeriesAdaptivePrecisionTotalDegree(sys1)
 
-solver.solve()
+#solver.solve()
 solver1.solve()
 
 print(dir(pb))
@@ -75,7 +97,7 @@ print(dir(pb.nag_algorithm))
 'ZeroDimPowerSeriesFixedMultiplePrecisionTotalDegree', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', 
 '__loader__', '__name__', '__package__', '__path__', '__spec__', 'bertini']
 '''
-print(dir(solver))
+#print(dir(solver))
 ''' solver
 ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', 
 '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__instance_size__', '__le__', '__lt__', 
@@ -83,7 +105,7 @@ print(dir(solver))
 '__subclasshook__', '__weakref__', 'endgame_boundary_data', 'get_endgame', 'get_tracker', 'solution_metadata', 
 'solutions', 'solve']
 '''
-print(dir(sys))
+#print(dir(sys))
 '''
 ['__add__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', 
 '__getattribute__', '__getstate__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', 
@@ -98,9 +120,9 @@ print(dir(sys))
 'set_path_variable', 'set_variables', 'variable_groups']
 '''
 
-for soln in solver.solutions():
-    print('-------------- solution --------------')
-    print(sys.dehomogenize_point(soln))
+#for soln in solver.solutions():
+#    print('-------------- solution --------------')
+#    print(sys.dehomogenize_point(soln))
 
 for soln in solver1.solutions():
     print('-------------- solution1 --------------')

@@ -14,7 +14,8 @@ using DynamicPolynomials
 
 @polyvar x 
 
-p = (1 + 2im)*x^3 + (3 - im)*x^2 + 2im*x + 1
+# p = (1 + 2im)*x^3 + (3 - im)*x^2 + 2im*x + 1
+p = x^4 -3*x^3 -2*x^2 + 10*x - 12
 F = System([p])
 
 result = solve(F)
