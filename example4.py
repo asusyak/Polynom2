@@ -23,6 +23,11 @@ f.add_variable_group(vg)
 
 g = pb.system.start_system.TotalDegree(f)
 
+#gg = pb.system.start_system.AbstractStartSystem
+#q = gg.__class__
+
+#print(q)
+
 homotopy = t*g + (1-t)*f
 
 homotopy.add_path_variable(t);

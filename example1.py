@@ -49,7 +49,7 @@ gamma = Rational.rand();
 final_system = (1 - t) * sys + gamma * t * td;
 final_system.add_path_variable(t);
 
-print(final_system)
+# print(final_system)
 prec_config = AMPConfig(final_system);
 
 stepping_pref = SteppingConfig();
@@ -75,12 +75,12 @@ for i in range(n):
     pb.default_precision(ambient_precision);
     final_system.precision(ambient_precision);
 
-    print('here')
+    #print('here')
 
     td.precision(ambient_precision)
     start_point = td.start_point_mp(i);
 
-    print('there')
+    #print('there')
     print(pb.multiprec.precision(start_point))
 
     bdry_pt = np.zeros(dtype=mpfr_complex, shape=(3));
