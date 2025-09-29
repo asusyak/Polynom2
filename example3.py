@@ -11,6 +11,11 @@ sys.auto_patch()
 
 solver = pb.nag_algorithm.ZeroDimCauchyAdaptivePrecisionTotalDegree(sys)
 solver.solve()
+# print(solver.solutions())
 
 for soln in solver.solutions():
-	print(sys.dehomogenize_point(soln))
+    print('--- 1')
+    print(soln)
+    print('--- 2')
+    print(sys.dehomogenize_point(soln))
+    print('--- 3')
