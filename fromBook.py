@@ -1,8 +1,10 @@
 import bertini
 
+x = bertini.function_tree.symbol.Variable("x")
+t = bertini.function_tree.symbol.Variable("t")
+
 # this is the target system
 sys = bertini.System()
-x = bertini.function_tree.symbol.Variable("x") #yes, you can make a variable not match its name...
 f = x**3 - 8
 sys.add_function(f)
 
@@ -10,17 +12,21 @@ grp = bertini.VariableGroup()
 grp.append(x)
 sys.add_variable_group(grp)
 
+# bertini.nag_algorithm.
 
 td = bertini.system.start_system.TotalDegree(sys)
 #td.start_point_mp(1)
 #td.start_point_d(2)
 
-t = bertini.function_tree.symbol.Variable("t")
 homotopy = (1-t)*sys + t*td
 homotopy.add_path_variable(t)
 
 tr = bertini.tracking.AMPTracker(homotopy)
-tr.tracking_tolerance(1e-5) # track the path to 5 digits or so
+config_stepping = bertini.tracking.config.SteppingConfig();
+config_newton = bertini.tracking.config.NewtonConfig();
+tr.setup(bertini.tracking.Predictor.RK4, 1e-5, 1e5, config_stepping, config_newton)
+
+# tr.tracking_tolerance(1e-5) # track the path to 5 digits or so
 # tr.infinite_truncation_tolerance(1e5)
 
 eg = bertini.endgame.AMPCauchyEG(tr)
